@@ -1,0 +1,94 @@
+PROJECT REPORT
+Automated Web Security Header & CORS Checker
+Submitted by: HibaPHarshad
+Program: IBM SkillsBuild Cyber Security 2026
+Organized by: BharatCares
+Project domain: Cybersecurity / Python
+1. Abstract
+Web applications communicate security-related configuration through HTTP response headers. Incorrect or absent headers may increase exposure to risks such as content injection, clickjacking, or MIME-type confusion, depending on the application. This project implements a small Python utility that checks six common security headers and observes selected Cross-Origin Resource Sharing (CORS) response headers for a single URL. The tool prints a readable summary and stores its findings in JSON. It is designed for learning and defensive review, not exploitation or comprehensive penetration testing.
+2. Problem Statement
+Manually checking response headers requires repeated inspection in browser developer tools or command-line utilities. Beginners need a simple, repeatable way to collect common header information and preserve the results for review. The project automates this basic collection process.
+3. Objectives
+•	Accept and validate a complete HTTP/HTTPS URL.
+•	Retrieve the HTTP response and report its status and final URL.
+•	Check six commonly recommended security headers.
+•	Observe basic CORS response behavior using a test Origin value.
+•	Display findings and export them to a JSON file.
+•	Promote authorized, responsible security testing.
+4. Scope
+The tool performs ordinary GET requests to one URL and follows redirects. It does not crawl links, attempt login, exploit vulnerabilities, or run intrusive tests. Its results are preliminary indicators that should be interpreted by a developer or security reviewer.
+5. Tools and Technologies
+•	Python 3.10 or later
+•	Jupyter Notebook / JupyterLab
+•	Requests Python library
+•	HTTP headers and CORS concepts
+•	JSON for saving scan output
+6. System Requirements
+Hardware: a computer capable of running Python and a modern web browser.
+Software: Python 3.10+, Jupyter Notebook or JupyterLab, and internet or approved test-network access.
+7. Methodology
+Input validation: The program verifies that the supplied URL includes an HTTP or HTTPS scheme and a hostname.
+HTTP request: It sends a normal GET request with a descriptive User-Agent and records the status code and final URL.
+Header review: It records whether each configured security header is present and captures its value when available.
+CORS observation: It sends a second GET request with a harmless test Origin and records Access-Control-Allow-Origin and Access-Control-Allow-Credentials.
+Output generation: It prints the findings and serializes the complete result dictionary into scan_results.json.
+8. Security Headers Checked
+Header	Purpose
+Strict-Transport-Security	Encourages browsers to use HTTPS for future requests.
+Content-Security-Policy	Helps limit allowed content sources and reduce some injection risks.
+X-Content-Type-Options	Helps prevent MIME-type sniffing.
+X-Frame-Options	Can restrict framing and reduce clickjacking risk.
+Referrer-Policy	Controls referrer information sent by the browser.
+Permissions-Policy	Restricts access to selected browser features.
+9. Algorithm
+1.	Start the program.
+2.	Read the target URL from the user.
+3.	Validate the URL scheme and hostname; stop with a clear error if invalid.
+4.	Send a GET request and capture the status, final URL, and response headers.
+5.	For each configured security header, record presence and value.
+6.	Send a second GET request with a test Origin and capture relevant CORS headers.
+7.	Collect any request errors without crashing the whole report.
+8.	Print the report and save all findings to scan_results.json.
+9.	End.
+10. How to Run
+10.	Install Python 3.10 or later.
+11.	Open a terminal in the project directory.
+12.	Run: python -m pip install -r requirements.txt
+13.	Open HibaPHarshad_AutomatedWebScanner.ipynb in Jupyter Notebook or JupyterLab.
+14.	Run the code cell and enter a URL you own or are authorized to test.
+15.	Review the printed report and the generated scan_results.json file.
+11. Expected Output
+The program displays the target URL, check time, HTTP status, final URL, and a PRESENT or MISSING status for each security header. It also displays the CORS response values and any network errors. Exact results depend on the authorized target website, its configuration, redirects, and network conditions.
+12. Testing Plan
+Test	Input / Condition	Expected behavior
+Valid URL	Authorized HTTP/HTTPS URL	Request is attempted and a report is produced.
+Invalid URL	Text without a valid scheme/hostname	Clear URL validation error.
+Network failure	Unreachable approved test host	Request error is recorded.
+Missing header	Response without a checked header	Header is marked MISSING, not automatically called exploitable.
+CORS response	Server returns CORS headers	Returned values are displayed for manual review.
+13. Results and Discussion
+The implementation provides a repeatable collection of selected HTTP response-header information and a basic CORS observation. It is useful for introductory cybersecurity practice and for creating a small evidence file for a report. Since no target website or scan output was supplied with the project request, this report does not claim measured results for a real target. Run the notebook on an authorized target and include your actual scan_results.json and screenshots if required by your instructor.
+14. Limitations
+•	It checks one URL at a time and does not crawl a site.
+•	Header presence alone does not establish that a site is secure or insecure.
+•	CORS behavior can vary by route, method, credentials, and application context.
+•	It does not assess TLS configuration, cookies, authentication, JavaScript, or application logic.
+•	Network errors, rate limits, and redirects may affect the output.
+15. Future Enhancements
+•	Add CSV or HTML export.
+•	Add a small graphical user interface.
+•	Allow a configurable header checklist.
+•	Add automated unit tests using a local mock HTTP server.
+•	Compare observed headers against a configurable organization policy.
+16. Conclusion
+The Automated Web Security Header & CORS Checker demonstrates how Python can collect and organize basic web-security configuration information. It provides a beginner-friendly foundation for learning about HTTP headers, CORS, exception handling, and structured reporting. It should be used only with authorization and as a first-pass aid rather than a replacement for a full security assessment.
+17. References
+•	Python documentation: https://docs.python.org/3/
+•	Requests documentation: https://requests.readthedocs.io/
+•	OWASP Secure Headers Project: https://owasp.org/www-project-secure-headers/
+•	MDN Web Docs — CORS: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+Appendix A — Deliverable Files
+•	HibaPHarshad_AutomatedWebScanner.ipynb
+•	requirements.txt
+•	HibaPHarshad_ProjectReport.docx
+•	README.md
